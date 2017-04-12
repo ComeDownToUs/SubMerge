@@ -20,6 +20,13 @@ class SubLine:
     return frames
   def hms_to_seconds(self):
     return 0
+  def __repr__(self):
+    out = "{  " + "\n" +\
+      "\t'start': " + str(self.time['start']) + "\n" + \
+      "\t'end': " + str(self.time['end']) + "\n" + \
+      "\tdialogue:" + str(self.dialogue) + "\n" + \
+      "}\n"
+    return out
 
 #just storing the file reading process within a function
 def read_subtitles(sub_file):
@@ -63,16 +70,28 @@ def process_srt(sub_text):
 def process_ssa(sub_text):
   #a blank line represents a next section
   segment_split = re.split('\n\[(.*)\]\n', sub_text)
-  #should split into 3-5 segments
-  #segment three contains the events, so it's the one we'll be working with
+  #re.split includes the split characters
   formatted_lines = []
-  dialogue_lines=segment_split[2].split('\n')
-  dialogue_format=dialogue_lines.pop(0)
+  dialogue_lines=segment_split[4].split('\n')
+  dialogue_format=dialogue_lines.pop(0).split(',')
+  for i in range(len(dialogue_format)):
+    dialogue_format[i] = dialogue_format[i].strip()
   #get indexes of relevant format pieces
+  start_i = dialogue_format.index("Start")
+  end_i = dialogue_format.index("End")
+  dialogue_i = dialogue_format.index("Text")
   for subtitle in dialogue_lines:
     #resolve indexes
     fragments = subtitle.split(',')
-  #print str(formatted_lines)
+    if len(fragments)<3:
+      continue
+    start_time = fragments[start_i].strip().replace('.', ':').split(':')
+    end_time = fragments[end_i].strip().replace('.', ':').split(':')
+    start_time[3]+="0"
+    end_time[3]+="0"
+    dialogue = [fragments[dialogue_i]]
+    formatted_lines.append(SubLine(dialogue, start_time, end_time))
+  print formatted_lines
   return formatted_lines
 
 #process .sub

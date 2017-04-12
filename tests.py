@@ -5,7 +5,7 @@ import datetime
 srt_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 833*1000), datetime.time(0, 1, 19, 0) )]
 ssa_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 83*10000), datetime.time(0, 1, 19, 0) )]
 srt_testfile = 'test_files/SRT_3Lines.srt'
-ssa_testfile = 'test_files/SSATest.ssa'
+ssa_testfile = 'test_files/SSA_3Lines.ssa'
 
 #basic reading and writing tests
 class TestCore(unittest.TestCase):
@@ -27,7 +27,7 @@ class TestCore(unittest.TestCase):
     self.assertEqual(input_subs, output_subs)
     #write as srt to file
   
-  def read_ssa_dialogue(self):
+  def test_read_ssa_dialogue(self):
     self.assertEqual(self.ssaSubsFormat[0].dialogue, ssa_verifier[0].dialogue)
 
   def read_ssa_times(self):
