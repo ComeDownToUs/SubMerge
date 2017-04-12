@@ -72,7 +72,7 @@ def process_ssa(sub_text):
   for subtitle in dialogue_lines:
     #resolve indexes
     fragments = subtitle.split(',')
-  print str(formatted_lines)
+  #print str(formatted_lines)
   return formatted_lines
 
 #process .sub
@@ -80,11 +80,26 @@ def process_ssa(sub_text):
   #split dialogue by '|'
 
 
-#regular converters, reformats subtitles to a string in the correct format
-#write sub
-
+#regular converters, reformats subtitles to a string in the correct format 
+#write srt
+def format_srt(sub_lines):
+  srt_output = ""
+  counter = 1
+  for entry in sub_lines:
+    if counter != 1:
+      srt_output += "\n"
+    srt_output += str(counter)+"\n" 
+    srt_output += entry.time['start'].strftime("%H:%M:%S,%f")[0:12] 
+    srt_output += " --> " 
+    srt_output += entry.time['end'].strftime("%H:%M:%S,%f")[0:12]
+    srt_output += "\n"
+    for line in entry.dialogue:
+      srt_output += line
+      srt_output += "\n"
+    counter += 1
+  return srt_output
 #write ssa
 
-#write srt
+#write sub
 
 
