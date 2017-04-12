@@ -1,0 +1,6 @@
+{
+  'comments': [
+    'this is to hold all of the formatting standards for SSA files, with default styles',
+    'will initially contain just two styles, or maybe even a flat string to paste in'
+  ]
+}
