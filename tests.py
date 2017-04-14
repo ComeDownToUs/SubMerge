@@ -6,6 +6,7 @@ srt_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 
 ssa_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 83*10000), datetime.time(0, 1, 19, 0) )]
 srt_testfile = 'test_files/SRT_3Lines.srt'
 ssa_testfile = 'test_files/SSA_3Lines.ssa'
+config_testfile = 'test_files/config.json'
 
 #basic reading and writing tests
 class TestCore(unittest.TestCase):
@@ -30,7 +31,7 @@ class TestCore(unittest.TestCase):
   def test_read_ssa_dialogue(self):
     self.assertEqual(self.ssaSubsFormat[0].dialogue, ssa_verifier[0].dialogue)
 
-  def read_ssa_times(self):
+  def test_read_ssa_times(self):
     self.assertEqual(self.ssaSubsFormat[0].time, ssa_verifier[0].time)
 
   def write_ssa():
@@ -38,8 +39,9 @@ class TestCore(unittest.TestCase):
     #write as ssa to file, compare
 
 class TestProcessConfig(unittest.TestCase):
-  def readtes():
+  def read_config_json():
     return 0
+
 
 class TestMerges(unittest.TestCase):
   def __init__(self, *args, **kwargs):

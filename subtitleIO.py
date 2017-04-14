@@ -1,12 +1,6 @@
 import re
 import datetime
 
-#class
-  #dialogue array (line by line)
-  #milliseconds {start, end}
-  #def inframes(frames)
-  #def inseconds
-
 class SubLine:
   def __init__(self, subs, start, end):
     self.dialogue = []
@@ -21,10 +15,10 @@ class SubLine:
   def hms_to_seconds(self):
     return 0
   def __repr__(self):
-    out = "{  " + "\n" +\
-      "\t'start': " + str(self.time['start']) + "\n" + \
-      "\t'end': " + str(self.time['end']) + "\n" + \
-      "\tdialogue:" + str(self.dialogue) + "\n" + \
+    out = "{" +\
+      " start:" + str(self.time['start']) + \
+      ", end:" + str(self.time['end']) + \
+      ", dialogue:" + str(self.dialogue) + \
       "}\n"
     return out
 
@@ -65,39 +59,81 @@ def process_srt(sub_text):
     formatted_lines.append(SubLine(dialogue_lines, time_formatted[0], time_formatted[1]))
   return formatted_lines
 
-#process ssa
+# process ssa
 # formatting from here https://matroska.org/technical/specs/subtitles/ssa.html
 def process_ssa(sub_text):
-  #a blank line represents a next section
-  segment_split = re.split('\n\[(.*)\]\n', sub_text)
-  #re.split includes the split characters
   formatted_lines = []
-  dialogue_lines=segment_split[4].split('\n')
-  dialogue_format=dialogue_lines.pop(0).split(',')
-  for i in range(len(dialogue_format)):
-    dialogue_format[i] = dialogue_format[i].strip()
+  #a blank line represents a next section
+  segment_split = re.split('\n\[Events\]\n|\n\[V4 Styles\]\n', sub_text)
+  dialogue_lines=segment_split[2].split('\n') # <<TODO>> Remove hardcoding for flexibility
+  dialogue_format=parse_ssa_line(dialogue_lines.pop(0))
   #get indexes of relevant format pieces
-  start_i = dialogue_format.index("Start")
-  end_i = dialogue_format.index("End")
-  dialogue_i = dialogue_format.index("Text")
   for subtitle in dialogue_lines:
     #resolve indexes
-    fragments = subtitle.split(',')
-    if len(fragments)<3:
+    if len(subtitle)<3:
       continue
-    start_time = fragments[start_i].strip().replace('.', ':').split(':')
-    end_time = fragments[end_i].strip().replace('.', ':').split(':')
-    start_time[3]+="0"
-    end_time[3]+="0"
-    dialogue = [fragments[dialogue_i]]
+    subtitle = parse_ssa_line(subtitle, dialogue_format['values'])
+    start_time = format_ssa_time(subtitle['Start'])
+    end_time = format_ssa_time(subtitle['End'])
+    dialogue = [subtitle['Text']]
     formatted_lines.append(SubLine(dialogue, start_time, end_time))
   print formatted_lines
   return formatted_lines
 
-#process .sub
-  #convert frames to seconds
-  #split dialogue by '|'
 
+'''
+formats an SSA line from a string into its parts
+dialogue additional commas handled
+'''
+def parse_ssa_line(line, formatting=None):
+  '''
+    input: 
+      line = 
+        "Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, PrimaryEffect, Text"
+    output:
+      parsed_line =
+        {
+          'type': 'Format',
+          'values': [
+            'Marked', 
+            'Start, 
+            'End', 
+            'Style', 
+            'Name', 
+            'MarginL', 
+            'MarginR', 
+            'MarginV', 
+            'PrimaryEffect', 
+            'Text'
+          ]
+        }
+  '''
+  parsed_line = {
+    'title': "",
+  }
+  line = line.split(":", 1)
+  parsed_line['title'] = line.pop(0)
+  if type(formatting) is list:
+    line = line[0].split(',', len(formatting))
+    for i in range(len(line)):
+      #parsed_line['values'].append(line[i].strip())
+      parsed_line[formatting[i]] = line[i].strip()
+  else:
+    line = line[0].split(',')
+    parsed_line['values'] = []
+    for entry in line:
+      parsed_line['values'].append(entry.strip())
+  print parsed_line
+  return parsed_line
+
+#formats to milliseconds to match srt specs
+def format_ssa_time(time_str):
+  fmt_time = time_str.replace('.', ':').split(':')
+  fmt_time[3]+= "0"
+  return subs_to_time(fmt_time)
+
+
+###---OUTPUT FORMATTING--###
 
 #regular converters, reformats subtitles to a string in the correct format 
 #write srt
@@ -108,7 +144,7 @@ def format_srt(sub_lines):
     if counter != 1:
       srt_output += "\n"
     srt_output += str(counter)+"\n" 
-    srt_output += entry.time['start'].strftime("%H:%M:%S,%f")[0:12] 
+    srt_output += entry.time['start'].strftime("%H:%M:%S,%f")[0:12]#hacky solution to switch from microseconds to milliseconds
     srt_output += " --> " 
     srt_output += entry.time['end'].strftime("%H:%M:%S,%f")[0:12]
     srt_output += "\n"
@@ -117,7 +153,15 @@ def format_srt(sub_lines):
       srt_output += "\n"
     counter += 1
   return srt_output
+
 #write ssa
+def format_ssa(sub_lines):
+  '''
+  read in the config files and build the first two sections from that
+  write mix the config and subtitles parts for writing the dialogues
+  in merged case, use inline stylings
+  '''
+  pass
 
 #write sub
 
