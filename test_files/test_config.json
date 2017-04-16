@@ -1,0 +1,103 @@
+{
+	"test_data": {
+		"srt_testfile": "test_files/SRT_3Lines.srt",
+		"ssa_testfile": "test_files/SSA_3Lines.ssa",
+	},
+	"ssa_specs": {
+		"comments":	{
+			"top layer breaks ssa segments": {
+				"List lays out order of values as strings": {
+					"Objects at end of list contain sets of values": {}
+				}
+			}
+		},
+		"Events": [
+			"Marked", 
+			"Start", 
+			"End", 
+			"Style", 
+			"Name", 
+			"MarginL", 
+			"MarginR", 
+			"MarginV", 
+			"PrimaryEffect", 
+			"Text",
+			{
+				"Style": "Default",
+				"End": "00:00:00.00",
+				"Name": "NTP",
+				"title": "Dialogue",
+				"Text": "Placeholder",
+				"PrimaryEffect": "!Effect",
+				"Marked": "Marked=0",
+				"Start": "00:00:05.00",
+				"MarginV": "0000",
+				"MarginR": "0000",
+				"MarginL": "0000"
+			},
+		], 
+		"V4 Styles": {
+			"format": [
+				"Name", 
+				"Fontname", 
+				"Fontsize", 
+				"PrimaryColour", 
+				"SecondaryColour", 
+				"TertiaryColour",
+				"BackColour",
+				"Bold",
+				"Italic",
+				"BorderStyle",
+				"Outline",
+				"Shadow",
+				"Alignment",
+				"MarginL",
+				"MarginR",
+				"MarginV",
+				"AlphaLevel",
+				"Encoding", 
+				{ 
+					"Fontname": "Tahoma",
+					"AlphaLevel": "0",
+					"Name": "Default",
+					"MarginL": "30",
+					"title": "Style",
+					"Outline": "1",
+					"PrimaryColour": "16777215",
+					"TertiaryColour": "16777215",
+					"SecondaryColour": "16777215",
+					"MarginV": "10",
+					"BackColour": "12632256",
+					"Fontsize": "24",
+					"Italic": "0",
+					"Encoding": "0",
+					"BorderStyle": "1",
+					"MarginR": "30",
+					"Shadow": "0",
+					"Alignment": "2",
+					"Bold": "-1"
+				}
+			]
+		},
+	},
+	"primary_subs":{
+		"comments": "these override whatever is specified in V4 styles",
+		"fontsize": 24,
+		"color": "#FFF",
+		"italics": false,
+		"weight": false,
+		"underline": false
+	},
+	"secondary_subs":{
+		"fontsize": 0.75,
+		"color": "#CCC",
+		"italics": false,
+		"weight": false,
+		"underline": false
+	},
+	"merger_string_specs": {
+		"secondary_char_limit": 80,
+		"newline": false,
+		"time_variance": 500
+	}
+}
