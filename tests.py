@@ -39,7 +39,8 @@ class TestCore(unittest.TestCase):
     #write as ssa to file, compare
 
 class TestProcessConfig(unittest.TestCase):
-  def read_config_json():
+  def test_read_config_json(self):
+    subtitleIO.process_config(config_testfile)
     return 0
 
 

@@ -1,5 +1,7 @@
 import re
 import datetime
+import json
+from collections import OrderedDict
 
 class SubLine:
   def __init__(self, subs, start, end):
@@ -41,6 +43,10 @@ def subs_to_time(subs_time):
   seconds = int(subs_time[2])
   microsec = int(subs_time[3])*1000#srt is in thousandths of a second
   return datetime.time(hours, minutes, seconds, microsec)
+
+def process_config(config_file):
+  data = json.load(open(config_file), object_pairs_hook=OrderedDict)
+  print data
 
 def process_srt(sub_text):
   #a blank line represents a next section
@@ -87,23 +93,23 @@ dialogue additional commas handled
 '''
 def parse_ssa_line(line, formatting=None):
   '''
-    input: 
-      line = 
+    input:
+      line =
         "Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, PrimaryEffect, Text"
     output:
       parsed_line =
         {
           'type': 'Format',
           'values': [
-            'Marked', 
-            'Start, 
-            'End', 
-            'Style', 
-            'Name', 
-            'MarginL', 
-            'MarginR', 
-            'MarginV', 
-            'PrimaryEffect', 
+            'Marked',
+            'Start,
+            'End',
+            'Style',
+            'Name',
+            'MarginL',
+            'MarginR',
+            'MarginV',
+            'PrimaryEffect',
             'Text'
           ]
         }
@@ -135,7 +141,7 @@ def format_ssa_time(time_str):
 
 ###---OUTPUT FORMATTING--###
 
-#regular converters, reformats subtitles to a string in the correct format 
+#regular converters, reformats subtitles to a string in the correct format
 #write srt
 def format_srt(sub_lines):
   srt_output = ""
@@ -143,9 +149,9 @@ def format_srt(sub_lines):
   for entry in sub_lines:
     if counter != 1:
       srt_output += "\n"
-    srt_output += str(counter)+"\n" 
+    srt_output += str(counter)+"\n"
     srt_output += entry.time['start'].strftime("%H:%M:%S,%f")[0:12]#hacky solution to switch from microseconds to milliseconds
-    srt_output += " --> " 
+    srt_output += " --> "
     srt_output += entry.time['end'].strftime("%H:%M:%S,%f")[0:12]
     srt_output += "\n"
     for line in entry.dialogue:

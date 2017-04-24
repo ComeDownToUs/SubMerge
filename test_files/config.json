@@ -1,7 +1,7 @@
 {
 	"test_data": {
 		"srt_testfile": "test_files/SRT_3Lines.srt",
-		"ssa_testfile": "test_files/SSA_3Lines.ssa",
+		"ssa_testfile": "test_files/SSA_3Lines.ssa"
 	},
 	"ssa_specs": {
 		"comments":	{
@@ -34,7 +34,7 @@
 				"MarginV": "0000",
 				"MarginR": "0000",
 				"MarginL": "0000"
-			},
+			}
 		], 
 		"V4 Styles": {
 			"format": [
@@ -78,7 +78,7 @@
 					"Bold": "-1"
 				}
 			]
-		},
+		}
 	},
 	"primary_subs":{
 		"comments": "these override whatever is specified in V4 styles",
