@@ -1,5 +1,7 @@
 import re
 import datetime
+import json
+from collections import OrderedDict
 
 class SubLine:
   def __init__(self, subs, start, end):
@@ -23,13 +25,13 @@ class SubLine:
     return out
 
 #just storing the file reading process within a function
-def read_subtitles(sub_file):
+def read_full_file(sub_file):
   f = open(sub_file, 'r')
   text = f.read()
   f.close()
   return text
 
-def write_subtitles(sub_file, sub_text):
+def write_file(sub_file, sub_text):
   f = open(sub_file, 'w')
   f.write(subtext)
   f.close()
@@ -41,6 +43,11 @@ def subs_to_time(subs_time):
   seconds = int(subs_time[2])
   microsec = int(subs_time[3])*1000#srt is in thousandths of a second
   return datetime.time(hours, minutes, seconds, microsec)
+
+#likely needs expansion
+def process_config(config_file):
+  return json.loads(read_full_file(config_file))
+
 
 def process_srt(sub_text):
   #a blank line represents a next section
@@ -77,7 +84,6 @@ def process_ssa(sub_text):
     end_time = format_ssa_time(subtitle['End'])
     dialogue = [subtitle['Text']]
     formatted_lines.append(SubLine(dialogue, start_time, end_time))
-  print formatted_lines
   return formatted_lines
 
 
@@ -86,28 +92,6 @@ formats an SSA line from a string into its parts
 dialogue additional commas handled
 '''
 def parse_ssa_line(line, formatting=None):
-  '''
-    input: 
-      line = 
-        "Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, PrimaryEffect, Text"
-    output:
-      parsed_line =
-        {
-          'type': 'Format',
-          'values': [
-            'Marked', 
-            'Start, 
-            'End', 
-            'Style', 
-            'Name', 
-            'MarginL', 
-            'MarginR', 
-            'MarginV', 
-            'PrimaryEffect', 
-            'Text'
-          ]
-        }
-  '''
   parsed_line = {
     'title': "",
   }
@@ -135,7 +119,7 @@ def format_ssa_time(time_str):
 
 ###---OUTPUT FORMATTING--###
 
-#regular converters, reformats subtitles to a string in the correct format 
+#regular converters, reformats subtitles to a string in the correct format
 #write srt
 def format_srt(sub_lines):
   srt_output = ""
@@ -143,9 +127,9 @@ def format_srt(sub_lines):
   for entry in sub_lines:
     if counter != 1:
       srt_output += "\n"
-    srt_output += str(counter)+"\n" 
+    srt_output += str(counter)+"\n"
     srt_output += entry.time['start'].strftime("%H:%M:%S,%f")[0:12]#hacky solution to switch from microseconds to milliseconds
-    srt_output += " --> " 
+    srt_output += " --> "
     srt_output += entry.time['end'].strftime("%H:%M:%S,%f")[0:12]
     srt_output += "\n"
     for line in entry.dialogue:
@@ -161,7 +145,32 @@ def format_ssa(sub_lines):
   write mix the config and subtitles parts for writing the dialogues
   in merged case, use inline stylings
   '''
-  pass
+  ssa_output = ("[Script Info]\n"+
+    "Title: <untitled>\n"+
+    "Original Script: <unknown>\n"+
+    "ScriptType: v4.00\n"+
+    "\n"+
+    "[V4 Styles]\n"+
+    "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding\n"+
+    "Style: Default,Tahoma,24,16777215,16777215,16777215,12632256,-1,0,1,1,0,2,30,30,10,0,0\n"+
+    "\n"+
+    "[Events]\n"+
+    "Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, PrimaryEffect, Text\n")
+  for entry in sub_lines:
+    ssa_output += 'Dialogue: Marked=0,'
+    ssa_output += entry.time['start'].strftime("%H:%M:%S.%f")[0:11]
+    ssa_output += ','
+    ssa_output +=  entry.time['end'].strftime("%H:%M:%S.%f")[0:11]
+    ssa_output += ',Default,NTP,0000,0000,0000,!Effect,'
+    for line in entry.dialogue:
+      ssa_output += line
+      if(len(entry.dialogue)>1):
+        ssa_output += "\\n"
+    ssa_output+="\n"
+    print entry.time['start'].strftime("%H:%M:%S.%f")[0:11]
+    print entry.time['end'].strftime("%H:%M:%S.%f")[0:11]
+    print '\n\n\n'
+  return ssa_output
 
 #write sub
 
