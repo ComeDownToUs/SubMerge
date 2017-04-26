@@ -1,7 +1,6 @@
 import re
 import datetime
 import json
-from collections import OrderedDict
 
 class SubLine:
   def __init__(self, subs, start, end):
@@ -45,8 +44,11 @@ def subs_to_time(subs_time):
   return datetime.time(hours, minutes, seconds, microsec)
 
 #likely needs expansion
-def process_config(config_file):
-  return json.loads(read_full_file(config_file))
+def read_json(json_file):
+  return json.loads(read_full_file(json_file))
+
+def get_ssa_format(config_dict):
+  return 0
 
 
 def process_srt(sub_text):
@@ -107,7 +109,6 @@ def parse_ssa_line(line, formatting=None):
     parsed_line['values'] = []
     for entry in line:
       parsed_line['values'].append(entry.strip())
-  print parsed_line
   return parsed_line
 
 #formats to milliseconds to match srt specs
@@ -139,6 +140,7 @@ def format_srt(sub_lines):
   return srt_output
 
 #write ssa
+#tests need to be updated when this is expanded upon
 def format_ssa(sub_lines):
   '''
   read in the config files and build the first two sections from that
@@ -167,9 +169,6 @@ def format_ssa(sub_lines):
       if(len(entry.dialogue)>1):
         ssa_output += "\\n"
     ssa_output+="\n"
-    print entry.time['start'].strftime("%H:%M:%S.%f")[0:11]
-    print entry.time['end'].strftime("%H:%M:%S.%f")[0:11]
-    print '\n\n\n'
   return ssa_output
 
 #write sub

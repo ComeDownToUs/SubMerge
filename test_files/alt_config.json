@@ -10,17 +10,6 @@
       "but I want to utilise reading from config files as much as possible at the moment"
     ],
     "Events": {
-      "title": "Dialogue",
-      "Marked": "Marked=0",
-      "Start": "00:00:05.00",
-      "End": "00:00:00.00",
-      "Style": "Default",
-      "Name": "NTP",
-      "MarginL": "0000",
-      "MarginR": "0000",
-      "MarginV": "0000",
-      "PrimaryEffect": "!Effect",
-      "Text": "Placeholder",
       "order": [
         "Marked", 
         "Start", 
@@ -32,28 +21,22 @@
         "MarginV", 
         "PrimaryEffect", 
         "Text"
-      ]
+      ],
+      "default": {
+        "title": "Dialogue",
+        "Marked": "Marked=0",
+        "Start": "00:00:05.00",
+        "End": "00:00:00.00",
+        "Style": "Default",
+        "Name": "NTP",
+        "MarginL": "0000",
+        "MarginR": "0000",
+        "MarginV": "0000",
+        "PrimaryEffect": "!Effect",
+        "Text": "Placeholder"
+      }
     },
     "V4 Styles": {
-      "title": "Style",
-      "Name": "Default",
-      "Fontname": "Tahoma", 
-      "Fontsize": "24",
-      "PrimaryColour": "16777215",
-      "SecondaryColour": "16777215",
-      "TertiaryColour": "16777215",
-      "BackColour": "12632256",
-      "Bold": "-1",
-      "Italic": "0",
-      "BorderStyle": "1",
-      "Outline": "1",
-      "Shadow": "0",
-      "Alignment": "2",
-      "MarginL": "30",
-      "MarginR": "30",
-      "MarginV": "10",
-      "AlphaLevel": "0",
-      "Encoding": "0",
       "order": [
         "Name", 
         "Fontname", 
@@ -73,7 +56,28 @@
         "MarginV",
         "AlphaLevel",
         "Encoding"
-      ]
+      ],
+      "default": {
+        "title": "Style",
+        "Name": "Default",
+        "Fontname": "Tahoma", 
+        "Fontsize": "24",
+        "PrimaryColour": "16777215",
+        "SecondaryColour": "16777215",
+        "TertiaryColour": "16777215",
+        "BackColour": "12632256",
+        "Bold": "-1",
+        "Italic": "0",
+        "BorderStyle": "1",
+        "Outline": "1",
+        "Shadow": "0",
+        "Alignment": "2",
+        "MarginL": "30",
+        "MarginR": "30",
+        "MarginV": "10",
+        "AlphaLevel": "0",
+        "Encoding": "0"
+      }
     }
   },
   "primary_subs":{
