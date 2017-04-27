@@ -48,6 +48,74 @@ def read_json(json_file):
   return json.loads(read_full_file(json_file))
 
 def get_ssa_format(config_dict):
+  #store hardcoded events and styles schemas
+  #for a few reasons I'm refraining from using ordered dict at the moment
+  event = {
+    "title": "Dialogue",
+    "Marked": "Marked=0",
+    "Start": "00:00:05.00",
+    "End": "00:00:00.00",
+    "Style": "Default",
+    "Name": "NTP",
+    "MarginL": "0000",
+    "MarginR": "0000",
+    "MarginV": "0000",
+    "PrimaryEffect": "!Effect",
+    "Text": "Placeholder",
+    "order": [
+      "Marked",
+      "Start",
+      "End",
+      "Style",
+      "Name",
+      "MarginL",
+      "MarginR",
+      "MarginV",
+      "PrimaryEffect",
+      "Text"
+    ]}
+  style = {
+    "title": "Style",
+    "Name": "Default",
+    "Fontname": "Tahoma",
+    "Fontsize": "24",
+    "PrimaryColour": "16777215",
+    "SecondaryColour": "16777215",
+    "TertiaryColour": "16777215",
+    "BackColour": "12632256",
+    "Bold": "-1",
+    "Italic": "0",
+    "BorderStyle": "1",
+    "Outline": "1",
+    "Shadow": "0",
+    "Alignment": "2",
+    "MarginL": "30",
+    "MarginR": "30",
+    "MarginV": "10",
+    "AlphaLevel": "0",
+    "Encoding": "0",
+    "order": [
+      "Name",
+      "Fontname",
+      "Fontsize",
+      "PrimaryColour",
+      "SecondaryColour",
+      "TertiaryColour",
+      "BackColour",
+      "Bold",
+      "Italic",
+      "BorderStyle",
+      "Outline",
+      "Shadow",
+      "Alignment",
+      "MarginL",
+      "MarginR",
+      "MarginV",
+      "AlphaLevel",
+      "Encoding"
+    ]}
+  #search for matching entries from config file, replace where relevant, print warning errors where error
+  #build log and print string of results, warnings, etc
   return 0
 
 
@@ -147,6 +215,7 @@ def format_ssa(sub_lines):
   write mix the config and subtitles parts for writing the dialogues
   in merged case, use inline stylings
   '''
+
   ssa_output = ("[Script Info]\n"+
     "Title: <untitled>\n"+
     "Original Script: <unknown>\n"+
