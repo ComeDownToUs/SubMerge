@@ -4,25 +4,18 @@
     "srt_testfile": "test_files/SRT_3Lines.srt",
     "ssa_testfile": "test_files/SSA_3Lines.ssa"
   },
-  "ssa_specs": {
-    "comments":
-      "as ssa's require strict ordering I've included an array of the order values are to go in
-      and their default values, a more customisable version may require these to be hardcoded
-      but I want to utilise reading from config files as much as possible at the moment",
+  "ssa": {
+    "comments":  [
+      "as ssa's require strict ordering I've included an array of the order values are to go in",
+      "and their default values, a more customisable version may require these to be hardcoded",
+      "but I want to utilise reading from config files as much as possible at the moment"
+    ],
+    "Script Info": {
+    },
     "Events": {
-      "no_event": {}
     },
     "V4 Styles": {
-      "no_style": {}
     }
-  },
-  "primary_subs":{
-    "comments": "these override whatever is specified in V4 styles",
-    "fontsize": 24,
-    "color": "#FFF",
-    "italics": false,
-    "weight": false,
-    "underline": false
   },
   "secondary_subs":{
     "comments": "inline overrides for the secondary subs",

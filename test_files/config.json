@@ -1,36 +1,39 @@
 {
+  "<<TODO>>": "move defaults from here to readme, outline options (e.g. fonts)",
   "test_data": {
     "srt_testfile": "test_files/SRT_3Lines.srt",
     "ssa_testfile": "test_files/SSA_3Lines.ssa"
   },
-  "ssa_specs": {
+  "ssa": {
     "comments":  [
       "as ssa's require strict ordering I've included an array of the order values are to go in",
       "and their default values, a more customisable version may require these to be hardcoded",
       "but I want to utilise reading from config files as much as possible at the moment"
     ],
+    "Script Info": {
+      "title": "Untitled",
+      "Original Script": "<unknown>"
+    },
     "Events": {
       "title": "Dialogue",
       "Marked": "Marked=0",
-      "Start": "00:00:05.00",
-      "End": "00:00:00.00",
       "Style": "Default",
       "Name": "NTP",
       "MarginL": "0000",
       "MarginR": "0000",
       "MarginV": "0000",
       "PrimaryEffect": "!Effect",
-      "Text": "Placeholder",
       "order": [
+        "title",
         "Marked", 
-        "Start", 
-        "End", 
         "Style", 
         "Name", 
         "MarginL", 
         "MarginR", 
         "MarginV", 
         "PrimaryEffect", 
+        "Start", 
+        "End", 
         "Text"
       ]
     },
@@ -76,16 +79,8 @@
       ]
     }
   },
-  "primary_subs":{
-    "comments": "these override whatever is specified in V4 styles",
-    "fontsize": 24,
-    "color": "#FFF",
-    "italics": false,
-    "weight": false,
-    "underline": false
-  },
   "secondary_subs":{
-    "comments": "inline overrides for the secondary subs",
+    "comments": "inline overrides for the secondary subs in merger",
     "fontsize": 0.75,
     "color": "#CCC",
     "italics": false,

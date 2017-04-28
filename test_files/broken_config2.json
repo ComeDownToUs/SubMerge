@@ -1,31 +1,47 @@
 {
+  "broken_by": "PLACEHOLDER, currently untampered",
   "test_data": {
     "srt_testfile": "test_files/SRT_3Lines.srt",
     "ssa_testfile": "test_files/SSA_3Lines.ssa"
   },
-  "ssa_specs": {
-    "comments":  
-      "as ssa's require strict ordering I've included an array of the order values are to go in
-      and their default values, a more customisable version may require these to be hardcoded
-      but I want to utilise reading from config files as much as possible at the moment",
+  "ssa": {
+    "comments":  [
+      "as ssa's require strict ordering I've included an array of the order values are to go in",
+      "and their default values, a more customisable version may require these to be hardcoded",
+      "but I want to utilise reading from config files as much as possible at the moment"
+    ],
+    "Script Info": {
+      "title": "Untitled",
+      "Original Script": "<unknown>"
+    },
     "Events": {
       "title": "Dialogue",
       "Marked": "Marked=0",
-      "Start": "00:00:05.00",
-      "End": "00:00:00.00",
       "Style": "Default",
       "Name": "NTP",
-      "MarginL": "s0000",
+      "MarginL": "0000",
       "MarginR": "0000",
       "MarginV": "0000",
       "PrimaryEffect": "!Effect",
-      "Text": "Placeholder"
+      "order": [
+        "title",
+        "Marked",
+        "Style",
+        "Name",
+        "MarginL",
+        "MarginR",
+        "MarginV",
+        "PrimaryEffect",
+        "Start",
+        "End",
+        "Text"
+      ]
     },
     "V4 Styles": {
       "title": "Style",
       "Name": "Default",
-      "Fontname": "Tahoma", 
-      "Fontsize": "s24",
+      "Fontname": "Tahoma",
+      "Fontsize": "24",
       "PrimaryColour": "16777215",
       "SecondaryColour": "16777215",
       "TertiaryColour": "16777215",
@@ -40,16 +56,28 @@
       "MarginR": "30",
       "MarginV": "10",
       "AlphaLevel": "0",
-      "Encoding": "0"
+      "Encoding": "0",
+      "order": [
+        "Name",
+        "Fontname",
+        "Fontsize",
+        "PrimaryColour",
+        "SecondaryColour",
+        "TertiaryColour",
+        "BackColour",
+        "Bold",
+        "Italic",
+        "BorderStyle",
+        "Outline",
+        "Shadow",
+        "Alignment",
+        "MarginL",
+        "MarginR",
+        "MarginV",
+        "AlphaLevel",
+        "Encoding"
+      ]
     }
-  },
-  "primary_subs":{
-    "comments": "these override whatever is specified in V4 styles",
-    "fontsize": 24,
-    "color": "#FFF",
-    "italics": false,
-    "weight": false,
-    "underline": false
   },
   "secondary_subs":{
     "comments": "inline overrides for the secondary subs",
