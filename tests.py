@@ -6,7 +6,7 @@ srt_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 
 ssa_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 83*10000), datetime.time(0, 1, 19, 0) )]
 srt_testfile = 'test_files/SRT_3Lines.srt'
 ssa_testfile = 'test_files/SSA_3Lines.ssa'
-config_testfile = 'test_files/config.json'
+config_testfile = 'config.json'
 
 #basic reading and writing tests
 class TestCore(unittest.TestCase):

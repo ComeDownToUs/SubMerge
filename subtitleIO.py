@@ -3,6 +3,7 @@ import datetime
 import json
 import warnings
 
+#a standard class to act as an intermediary between formats
 class SubLine:
   def __init__(self, subs, start, end):
     self.dialogue = []
@@ -12,12 +13,12 @@ class SubLine:
       'start': start,
       'end': end
     }
-  def hms_to_frames(self, frames):
-    return frames
+  def hms_to_frames(self, framerate):
+    return framerate
   def hms_to_seconds(self):
     return 0
   def __repr__(self):
-    out = "{" +\
+    out = "[SUBLINE]=>{" +\
       " start:" + str(self.time['start']) + \
       ", end:" + str(self.time['end']) + \
       ", dialogue:" + str(self.dialogue) + \
@@ -43,7 +44,7 @@ def subs_to_time(subs_time):
   microsec = int(subs_time[3])*1000#srt is in thousandths of a second
   return datetime.time(hours, minutes, seconds, microsec)
 
-#likely needs expansion
+#reads file, returns dictionary
 def read_json(json_file):
   return json.loads(read_full_file(json_file))
 
@@ -72,8 +73,7 @@ def process_srt(sub_text):
   READING SSA
 '''
 # formatting from here https://matroska.org/technical/specs/subtitles/ssa.html
-
-#kinda hacky breakdown to find the individual parts, may require an overhaul
+# kinda hacky breakdown to find the individual parts, may require an overhaul
 def process_ssa(sub_text):
   formatted_lines = []
   #a blank line represents a next section
@@ -83,7 +83,7 @@ def process_ssa(sub_text):
   #get indexes of relevant format pieces
   for subtitle in dialogue_lines:
     #resolve indexes
-    if len(subtitle)<3:
+    if len(subtitle)<3: # <<TODO>> improve this, arbitrary means of skipping lines with no content
       continue
     subtitle = parse_ssa_line(subtitle, dialogue_format['values'])
     start_time = format_ssa_time(subtitle['Start'])
@@ -150,10 +150,12 @@ def format_srt(sub_lines):
 #tests need to be updated when this is expanded upon
 def format_ssa(sub_lines):
   ssa_skeleton = get_ssa_format()
-  ssa_output = ssa_skeleton[0] + "\n\n[V4 Styles]\n" + ssa_skeleton[1] +"\n\n[Events]\n"+ssa_skeleton[2]['format']+"\n"
+  ssa_output = ssa_skeleton["info_string"] + "\n\n"
+  ssa_output += (ssa_skeleton["style_string"] + "\n\n")
+  ssa_output += (ssa_skeleton["events"]['format']+"\n")
 
   for entry in sub_lines:
-    ssa_event = ssa_skeleton[2]['event']
+    ssa_event = ssa_skeleton['events']['event_shell']
     ssa_event = ssa_event.replace("00:00:00.00", entry.time['start'].strftime("%H:%M:%S.%f")[0:11], 1)
     ssa_event = ssa_event.replace("00:00:00.00", entry.time['end'].strftime("%H:%M:%S.%f")[0:11], 1)
     ssa_output += ssa_event
@@ -168,6 +170,8 @@ def format_ssa(sub_lines):
 #returns skeletal strings built from config specification to apply time and dialogue to for SSA
 def get_ssa_format():
   #<<TODO>> this needs to read in json and validate entries, with default values to fall back upon
+  #<<TODO>> replace these with ordered lists
+  #<<TODO>> provide function to output defaults
   script_info= {
     "title": "<untitled>",
     "Original Script": "<unknown>"
@@ -235,7 +239,11 @@ def get_ssa_format():
       "AlphaLevel",
       "Encoding"
     ]}
-  return [ssa_format_title(script_info), ssa_format_style(style), ssa_format_event(event)]
+  return {
+    "info_string": ssa_format_title(script_info),
+    "style_string": ssa_format_style(style),
+    "events": ssa_format_event(event)
+  }
 
 #<<TODO>> style and event violate DRY really
 #<<TODO>> very hacky substrings
@@ -247,8 +255,7 @@ def ssa_format_style(style):
   for i in style['order']:
     format_string += (i + ", ")
     style_string += (style[i] + ",")
-  #return {"format": format_string[:-2], "style": style_string[:-2]}
-  return format_string[:-2] +"\n"+style_string[:-1]
+  return "[V4 Styles]\n" + format_string[:-2] +"\n"+style_string[:-1]
 def ssa_format_event(event):
   format_string = "Format: "
   event_string = "Dialogue: "
@@ -256,7 +263,7 @@ def ssa_format_event(event):
     format_string += (i + ", ")
     if i in event.keys():
       event_string += (event[i] + ",")
-  return {"format": format_string[:-2], "event": event_string}
+  return {"format": "[Events]\n"+format_string[:-2], "event_shell": event_string}
 
 
 '''
