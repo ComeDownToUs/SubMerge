@@ -4,8 +4,8 @@ import datetime
 
 srt_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 833*1000), datetime.time(0, 1, 19, 0) )]
 ssa_verifier = [subtitleIO.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 83*10000), datetime.time(0, 1, 19, 0) )]
-srt_testfile = 'test_files/SRT_3Lines.srt'
-ssa_testfile = 'test_files/SSA_3Lines.ssa'
+srt_testfile = 'test_files/3Lines.srt'
+ssa_testfile = 'test_files/3Lines.ssa'
 config_testfile = 'config.json'
 
 #basic reading and writing tests
