@@ -23,7 +23,7 @@ def get_time_range(root_time, variance=1000):
   return start_point, end_point
 
 #just reduces a subtitle's dialogue proportions down to one string with no linebreaks
-def remove_newlines_ssa(sublist, newline_replacement = "--"):
+def remove_newlines(sublist, newline_replacement = "--"):
   for i in range(len(sublist)):
     if len(sublist[i].dialogue)>1:
       merged_dialogue = ""
@@ -34,7 +34,7 @@ def remove_newlines_ssa(sublist, newline_replacement = "--"):
 
 #apply stylings to secondary subs,
 #need to test which ones need closing
-def apply_styling(sublist, style_change):
+def ssa_apply_styling(sublist, style_change):
   styling = ""
   if "bold" is in style_change:
     styling = "{\b1}"+styling
