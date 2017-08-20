@@ -38,25 +38,50 @@
       ]
     },
     "V4 Styles": {
-      "title": "Style",
-      "Name": "Default",
-      "Fontname": "Tahoma",
-      "Fontsize": "24",
-      "PrimaryColour": "16777215",
-      "SecondaryColour": "16777215",
-      "TertiaryColour": "16777215",
-      "BackColour": "12632256",
-      "Bold": "-1",
-      "Italic": "0",
-      "BorderStyle": "1",
-      "Outline": "1",
-      "Shadow": "0",
-      "Alignment": "2",
-      "MarginL": "30",
-      "MarginR": "30",
-      "MarginV": "10",
-      "AlphaLevel": "0",
-      "Encoding": "0",
+      "styles": [
+        {
+          "title": "Style",
+          "Name": "Default",
+          "Fontname": "Tahoma",
+          "Fontsize": "24",
+          "PrimaryColour": "16777215",
+          "SecondaryColour": "16777215",
+          "TertiaryColour": "16777215",
+          "BackColour": "12632256",
+          "Bold": "-1",
+          "Italic": "0",
+          "BorderStyle": "1",
+          "Outline": "1",
+          "Shadow": "0",
+          "Alignment": "2",
+          "MarginL": "30",
+          "MarginR": "30",
+          "MarginV": "10",
+          "AlphaLevel": "0",
+          "Encoding": "0"
+        },
+        {
+          "title": "Style",
+          "Name": "Secondary",
+          "Fontname": "Tahoma",
+          "Fontsize": "16",
+          "PrimaryColour": "12632256",
+          "SecondaryColour": "16777215",
+          "TertiaryColour": "16777215",
+          "BackColour": "12632256",
+          "Bold": "-1",
+          "Italic": "1",
+          "BorderStyle": "1",
+          "Outline": "1",
+          "Shadow": "0",
+          "Alignment": "2",
+          "MarginL": "30",
+          "MarginR": "30",
+          "MarginV": "10",
+          "AlphaLevel": "0",
+          "Encoding": "0"
+        }
+      ],
       "order": [
         "Name",
         "Fontname",
@@ -79,18 +104,11 @@
       ]
     }
   },
-  "secondary_subs":{
-    "comments": "inline overrides for the secondary subs in merger",
-    "fontsize": 0.75,
-    "color": "#CCC",
-    "italics": false,
-    "weight": false,
-    "underline": false
-  },
   "merger_string_specs": {
     "secondary_char_limit": 80,
     "newline": false,
-    "time_variance": 500
+    "splitter": "==-==",
+    "time_variance_ms": 500
   }
 }
 

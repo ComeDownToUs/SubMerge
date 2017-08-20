@@ -1,4 +1,4 @@
-import subtitleIO
+import Subtitling
 
 #this is all messy and untested plotting at the moment
 #for SSA, both sets of subtitles appearing at the same time seems pretty essential
@@ -34,6 +34,7 @@ def remove_newlines(sublist, newline_replacement = "--"):
       sublist[i].dialogue = [merged_dialogue]
   return sublist
 
+# NOTE: This function is likely not required as SSA allows multiple subtitles at once
 #apply stylings to a string,
 #need to test which ones need closing
 def ssa_apply_styling(sublist, style_change):
@@ -55,8 +56,4 @@ def ssa_apply_styling(sublist, style_change):
     styling[1] = styling[0]+"{\s0}"
   #return styling[0]+dialogue+styling[1]
   return styling
-
-
-
-#
 
