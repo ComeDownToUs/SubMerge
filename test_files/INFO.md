@@ -13,3 +13,5 @@
 - Result_Merge_Match.srt
   The result of merging Merge_Match.srt with itself or Merge_1sec.srt if a one second window is allowed
 
+### Output folder
+Tests write to folder for comparison

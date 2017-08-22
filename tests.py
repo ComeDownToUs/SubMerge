@@ -4,6 +4,7 @@ import Subtitling
 import ProcessSSA
 import ProcessSRT
 import FileIO
+import SubMatch
 
 SRT_VERIFIER = [Subtitling.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 833*1000), datetime.time(0, 1, 19, 0) )]
 SSA_VERIFIER = [Subtitling.SubLine(['BROKEN EMBRACES'], datetime.time(0, 1, 12, 83*10000), datetime.time(0, 1, 19, 0) )]
@@ -14,6 +15,8 @@ MERGE_MATCH = 'test_files/Merge_Match.srt'
 MERGE_1SEC = 'test_files/Merge_1sec.srt'
 MERGE_MAXLEN = 'test_files/Merge_Longline.srt'
 MERGE_MULTILINE = 'test_files/Merge_Multiline.srt'
+RESULT_MERGE_MATCH = 'test_files/Result_Merge_Match.srt'
+RESULT_1SEC_FAIL = 'test_files/Result_1Sec_Fail.srt'
 CONFIG_FILE = 'config.json'
 
 #basic reading and writing tests
@@ -68,28 +71,49 @@ class TestProcessConfig(unittest.TestCase):
   #if
 
 #Testing the merge process, syncing files, validation,etc
+#Using SRT for simplicity's sake
 class TestMerges(unittest.TestCase):
   def __init__(self, *args, **kwargs):
-    super(TestConversion, self).__init__(*args, **kwargs)
-    self.srtSubsFormat = ProcessSRT.process_srt(FileIO.read_full_file(SRT_TESTFILE))
-    self.ssaSubsFormat = ProcessSSA.process_ssa(FileIO.read_full_file(SSA_TESTFILE))
+    super(TestMerges, self).__init__(*args, **kwargs)
+    self.resultMergeMatch = ProcessSRT.process_srt(FileIO.read_full_file(RESULT_MERGE_MATCH))
+    self.resultMergeMatchTxt = ProcessSRT.format_srt(self.resultMergeMatch)
+    self.result1SecFail = ProcessSRT.process_srt(FileIO.read_full_file(RESULT_1SEC_FAIL))
+    self.result1SecFailTxt = ProcessSRT.format_srt(self.result1SecFail)
+    FileIO.write_file('test_files/outputs/result1secFail.srt', self.result1SecFailTxt)
+    FileIO.write_file('test_files/outputs/resultMergeMatch.srt', self.resultMergeMatchTxt)
 
-  def pair_lines(self):
-    #needs to scan for subtitles with matching start times
-    #self.assertEqual(merged_subs[0], MATCH_VERIFIER)
-    return 0
+  def test_basic_pair(self):
+    subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
+    subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
+    SubMatch.match_process(subs1, subs2)
+    output = ProcessSRT.format_srt(subs1)
+    FileIO.write_file('test_files/outputs/basic_pair.srt', output)
+    self.assertEqual(output, self.resultMergeMatchTxt)
 
-  def time_window(self):
-    #maybe the second line? have the subtitles off by a specific amount
-    return 0
+  def test_time_window_fail(self):
+    subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
+    subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_1SEC))
+    SubMatch.match_process(subs1, subs2)
+    output = ProcessSRT.format_srt(subs1)
+    FileIO.write_file('test_files/outputs/time_window_fail.srt', output)
+    self.assertEqual(output, self.result1SecFailTxt)
 
-  def format_merges(self):
-    #needs to apply the necessary formatting changes to the two strings
-    return 0
+  def test_time_window_success(self):
+    subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
+    subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_1SEC))
+    SubMatch.match_process(subs1, subs2, 1000)
+    output = ProcessSRT.format_srt(subs1)
+    FileIO.write_file('test_files/outputs/time_window_success.srt', output)
+    self.assertEqual(output, self.resultMergeMatchTxt)
 
-  def write_file(self):
+  def write_file():
     #ideally unnecessary, use the default SSA writer
-    return 0
+    print 'c'
+
+#class CollapseDialogues
+#class SRT Out Merge
+#class TestConfig
+#class TestSSAMerge
 
 class SSAFormatting(unittest.TestCase):
   def __init__(self, *args, **kwargs):

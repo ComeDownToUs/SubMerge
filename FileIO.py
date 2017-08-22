@@ -10,9 +10,9 @@ def read_full_file(sub_file):
 
 def write_file(sub_file, sub_text):
   f = open(sub_file, 'w')
-  f.write(subtext)
+  f.write(sub_text)
   f.close()
-  return subtext
+  return sub_text
 
 def read_json(json_file): #returns dictionary
   return json.loads(read_full_file(json_file))

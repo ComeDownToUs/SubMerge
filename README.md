@@ -39,3 +39,4 @@ TO BE WRITTEN
 - Implement merge styling
 - Assess possibility for both subtitles appearing simultaneously on top and bottom of screen
 - Reduce SSA hardcoding, seems like it's ripe for failure right now
+- Many tests currently failing due to deep comparisons
