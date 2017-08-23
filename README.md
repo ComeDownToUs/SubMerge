@@ -45,14 +45,12 @@ SSA, being significantly more modifiable will ideally use a config file with a d
 TO BE WRITTEN
 
 #To-dos
-
 - Read in formatting options from json file
 - Create functions to display defaults
-- Break general tasks, core operations, srt, ssa and sub into separate files
 - Tweak to work as a basic subtitle conversion library
-- Implement merging process
 - Implement merge styling
 - Assess possibility for both subtitles appearing simultaneously on top and bottom of screen
 - Reduce SSA hardcoding, seems like it's ripe for failure right now
-- Many tests currently failing due to deep comparisons
 - Log decoupling issues (ideally want merge operations split from subtitle conversion as much as possible, and everything split by format too)
+- Config validations
+- Write to file in pieces
