@@ -1,0 +1,19 @@
+[Script Info]
+Title: <untitled>
+Original Script: <unknown>
+ScriptType: v4.00
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: Default,Tahoma,24,16777215,16777215,16777215,12632256,-1,0,1,1,0,2,30,30,10,0,0
+Style: Over,Tahoma,14,16777215,16777215,16777215,00000000,-1,0,1,1,0,6,10,10,6,0,0
+
+[Events]
+Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, PrimaryEffect, Text
+Dialogue: Marked=0,0:01:15.00,0:01:17.84,Over,NTP,0000,0000,0000,!Effect,lorem ipsum blah blah b{\b1}ott{\b0}o {\i1}un{\i0}lorem ipsum blah blah  insinua s{\b1}ott{\b0}o {\i1}un{\i0}lorem ipsum blah blah b s{\b1}ott{\b0}o {\i1}un{\i0}a lorem ipsum blah blah blah{\b1}ott{\b0}o {\i1}un{\i0}a tovaglia
+Dialogue: Marked=0,0:01:15.00,0:01:17.84,Default,NTP,0000,0000,0000,!Effect,lorem ipsum blah blah b\Ns{\b1}ott{\b0}o {\i1}un{\i0}blah
+Dialogue: Marked=0,0:01:17.84,0:01:20.36,Default,NTP,0000,0000,0000,!Effect,{\frz5}lorem ipsum {\fs10}blah blah b{\fs28}chieri\Nsenza che {\c&HFF&}nessuno se ne accorga.
+Dialogue: Marked=0,0:01:21.44,0:01:22.96,Default,NTP,0000,0000,0000,!Effect,{\frx30}lorem ipsum blah blah \Nblah blah blah
+Dialogue: Marked=0,0:01:22.00,0:01:23.96,Default,NTP,0000,0000,0000,!Effect,{\an2}{\frx30}asdfafsddg,\Nal adfasgasg
+Dialogue: Marked=0,0:01:25.44,0:01:28.64,Default,NTP,0000,0000,0000,!Effect,{\frx40}lorem ipsum blah blah b,\Nlorem ipsum blah blah b,
+Dialogue: Marked=0,0:01:28.68,0:01:31.88,Default,NTP,0000,0000,0000,!Effect,{\fry40}lorem ipsum blah blah b del suo\Nlorem ipsum blah blah b
