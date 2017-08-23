@@ -55,3 +55,4 @@ TO BE WRITTEN
 - Assess possibility for both subtitles appearing simultaneously on top and bottom of screen
 - Reduce SSA hardcoding, seems like it's ripe for failure right now
 - Many tests currently failing due to deep comparisons
+- Log decoupling issues (ideally want merge operations split from subtitle conversion as much as possible, and everything split by format too)
