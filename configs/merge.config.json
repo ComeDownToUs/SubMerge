@@ -1,0 +1,6 @@
+{
+  "secondary_char_limit": 80,
+  "newline": false,
+  "splitter": "==-==",
+  "time_variance_ms": 500
+}
