@@ -49,7 +49,7 @@ def character_cutoff(dialogue, limit=140):
     return dialogue[:(limit-4)]+'[...]'
 
 def merge_srt_format(sublist):
-  return Subtitling.format_srt(sublist)
+  return ProcessSRT.format_srt(sublist)
 
 def merge_ssa_format(sublist):
   return ProcessSSA.format_ssa(sublist, True)

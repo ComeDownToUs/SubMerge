@@ -50,9 +50,10 @@ def format_ssa(sub_lines, merge=False):
   ssa_skeleton = get_ssa_format()
   ssa_output = ssa_skeleton["info_string"] + "\n\n"
   ssa_output += "[V4 Styles]\n"
-  ssa_output += (ssa_skeleton["style_string"] + "\n\n")
+  ssa_output += (ssa_skeleton["style_string"] + "\n")
   ssa_output += "[Events]\n"
-  ssa_output += (ssa_skeleton["events"]['format']+"\n")
+  ssa_output += (ssa_skeleton["events"]['format'])
+  ssa_output += '\n'
 
   if merge:
     return ssa_output + format_merge_ssa(sub_lines, ssa_skeleton['events']['event_shell'])
