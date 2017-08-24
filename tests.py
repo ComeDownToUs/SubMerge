@@ -50,7 +50,7 @@ class TestCore(unittest.TestCase):
   # Output <<TODO>> Handle config file, test various aspects
   def test_write_ssa(self):
     output_format = ProcessSSA.format_ssa(self.ssaSubsFormat)
-    FileIO.write_file('output.ssa', output_format)
+    FileIO.write_file('test_files/outputs/output.ssa', output_format)
     self.assertEqual(self.ssaTestText, output_format)
     #write as ssa to file, compare
 
