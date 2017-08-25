@@ -3,6 +3,7 @@ import Subtitling
 
 ''' Inputs (converts to an array of SubLine class files) '''
 
+# <<TODO>> improve this, arbitrary means of skipping lines with no content, likely buggy
 def process_ssa(sub_text):
   formatted_lines = []
   segment_split = re.split('\n\[Events\]\n|\n\[V4 Styles\]\n', sub_text)
@@ -11,7 +12,7 @@ def process_ssa(sub_text):
   #get indexes of relevant format pieces
   for subtitle in dialogue_lines:
     #resolve indexes
-    if len(subtitle)<3: # <<TODO>> improve this, arbitrary means of skipping lines with no content
+    if len(subtitle)<3:
       continue
     subtitle = parse_ssa_line(subtitle, dialogue_format['values'])
     start_time = format_ssa_time(subtitle['Start'])
@@ -86,12 +87,10 @@ def format_merge_ssa(sub_lines, event_shells):
 
 #returns skeletal strings built from config specification to apply time and dialogue to for SSA
 def get_ssa_format():
-  #<<TODO>> this needs to read in json and validate entries, with default values to fall back upon
-  #<<TODO>> replace these with ordered lists
-  #<<TODO>> provide function to output defaults
+  #<<TODO>> Read in JSON configs and overwrite where appropriate
   script_info= {
-    "title": "<untitled>",
-    "Original Script": "<unknown>"
+    "title": "Built By https://github.com/ComeDownToUs/SubMerge",
+    "Original Script": "Likely Someone Else"
   }
   event = {
     "title": "Dialogue",
