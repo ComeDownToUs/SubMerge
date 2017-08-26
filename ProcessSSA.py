@@ -60,30 +60,39 @@ def format_ssa(sub_lines, merge=False):
     return ssa_output + format_merge_ssa(sub_lines, ssa_skeleton['events']['event_shell'])
 
   for entry in sub_lines:
-    ssa_event = ssa_skeleton['events']['event_shell'][0]
-    ssa_event = ssa_event.replace("00:00:00.00", entry.time['start'].strftime("%H:%M:%S.%f")[0:11], 1)
-    ssa_event = ssa_event.replace("00:00:00.00", entry.time['end'].strftime("%H:%M:%S.%f")[0:11], 1)
-    ssa_output += ssa_event
-    for line in entry.dialogue:
-      ssa_output += line
-      if(len(entry.dialogue)>1):
-        ssa_output += "\\n"
-    ssa_output+="\n"
+    ssa_output += format_ssa_line(entry, ssa_skeleton['events']['event_shell'][0])
   return ssa_output
+
+
+def format_ssa_line(subtitle, event_shell):
+  ssa_event = event_shell
+  ssa_event = ssa_event.replace("00:00:00.00", subtitle.time['start'].strftime("%H:%M:%S.%f")[0:11], 1)
+  ssa_event = ssa_event.replace("00:00:00.00", subtitle.time['end'].strftime("%H:%M:%S.%f")[0:11], 1)
+  for line in subtitle.dialogue:
+    ssa_event += line
+    ssa_event += "\\n"
+  ssa_event = ssa_event[:-2] + "\n"
+  return ssa_event
 
 def format_merge_ssa(sub_lines, event_shells):
   ssa_merge_output = ''
   for entry in sub_lines:
-    for index, line in enumerate(entry.dialogue):
-      line = line.replace('\n', '\\n')
-      if index > 1:
-        break
-      ssa_event = event_shells[index] + line
-      ssa_event = ssa_event.replace("00:00:00.00", entry.time['start'].strftime("%H:%M:%S.%f")[0:11], 1)
-      ssa_event = ssa_event.replace("00:00:00.00", entry.time['end'].strftime("%H:%M:%S.%f")[0:11], 1)
-      ssa_merge_output += ssa_event
-      ssa_merge_output += '\n'
+    ssa_merge_output += format_merge_ssa_line(entry, event_shells)
   return ssa_merge_output
+
+def format_merge_ssa_line(subtitle, event_shells):
+  ssa_subtitle_out = ''
+  for index, line in enumerate(subtitle.dialogue):
+    line = line.replace('\n', '\\n')
+    if index > 1:
+      break
+    ssa_event = event_shells[index] + line
+    ssa_event = ssa_event.replace("00:00:00.00", subtitle.time['start'].strftime("%H:%M:%S.%f")[0:11], 1)
+    ssa_event = ssa_event.replace("00:00:00.00", subtitle.time['end'].strftime("%H:%M:%S.%f")[0:11], 1)
+    ssa_subtitle_out += ssa_event
+    ssa_subtitle_out += '\n'
+  return ssa_subtitle_out
+
 
 #returns skeletal strings built from config specification to apply time and dialogue to for SSA
 def get_ssa_format():
