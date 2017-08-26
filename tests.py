@@ -17,7 +17,7 @@ MERGE_MAXLEN = 'test_files/Merge_Longline.srt'
 MERGE_MULTILINE = 'test_files/Merge_Multiline.srt'
 RESULT_MERGE_MATCH = 'test_files/Result_Merge_Match.srt'
 RESULT_1SEC_FAIL = 'test_files/Result_1Sec_Fail.srt'
-CONFIG_FILE = 'config.json'
+CONFIG_FILE = 'test_files/config.json'
 
 #basic reading and writing tests
 class TestCore(unittest.TestCase):
@@ -48,7 +48,7 @@ class TestCore(unittest.TestCase):
   def test_read_ssa_times(self):
     self.assertEqual(self.ssaSubsFormat[0].time, SSA_VERIFIER[0].time)
   # Output
-  #   <<TODO>> Handle config file, test various aspects
+  #   Config processing is highly related to this section
   def test_ssa_string(self):
     output_format = ProcessSSA.format_ssa(self.ssaSubsFormat)
     FileIO.write_file('test_files/outputs/output.ssa', output_format)

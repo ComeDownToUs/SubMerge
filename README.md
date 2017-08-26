@@ -48,8 +48,6 @@ TO BE WRITTEN
 - Read in formatting options from json file
 - Create functions to display defaults
 - Tweak to work as a basic subtitle conversion library
-- Implement merge styling
-- Assess possibility for both subtitles appearing simultaneously on top and bottom of screen
 - Reduce SSA hardcoding, seems like it's ripe for failure right now
 - Log decoupling issues (ideally want merge operations split from subtitle conversion as much as possible, and everything split by format too)
 - Config validations
