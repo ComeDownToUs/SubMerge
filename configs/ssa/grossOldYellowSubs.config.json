@@ -1,0 +1,21 @@
+{
+  "title": "Style",
+  "Name": "GrossOldSubsNoOutline",
+  "Fontname": "Arial",
+  "Fontsize": "20",
+  "PrimaryColour": "65535",
+  "SecondaryColour": "128",
+  "TertiaryColour": "16744448",
+  "BackColour": "-2147483640",
+  "Bold": "-1",
+  "Italic": "0",
+  "BorderStyle": "3",
+  "Outline": "0",
+  "Shadow": "0",
+  "Alignment": "2",
+  "MarginL": "10",
+  "MarginR": "10",
+  "MarginV": "10",
+  "AlphaLevel": "0",
+  "Encoding": "0"
+}

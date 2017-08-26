@@ -1,11 +1,11 @@
 import datetime
 import Subtitling
+import ProcessSSA
 
 #this is all messy and untested plotting at the moment
 #for SSA, both sets of subtitles appearing at the same time seems pretty essential
-def match_process(sublistA, sublistB, time_variance=500, newlines=None):
-  if newlines is not None:
-    remove_newlines(sublistA, newlines)
+def match_process(sublistA, sublistB, time_variance=500, newlines='\n'):
+  remove_newlines(sublistA, newlines)
   remove_newlines(sublistB, '[]')
   counter_B = 0
   for subtitle in sublistA:
@@ -47,6 +47,12 @@ def character_cutoff(dialogue, limit=140):
     return dialogue
   else:
     return dialogue[:(limit-4)]+'[...]'
+
+def merge_srt_format(sublist):
+  return ProcessSRT.format_srt(sublist)
+
+def merge_ssa_format(sublist):
+  return ProcessSSA.format_ssa(sublist, True)
 
 # NOTE: This function is likely not required as SSA allows multiple subtitles at once
 #apply stylings to a string,

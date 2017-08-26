@@ -17,7 +17,7 @@ MERGE_MAXLEN = 'test_files/Merge_Longline.srt'
 MERGE_MULTILINE = 'test_files/Merge_Multiline.srt'
 RESULT_MERGE_MATCH = 'test_files/Result_Merge_Match.srt'
 RESULT_1SEC_FAIL = 'test_files/Result_1Sec_Fail.srt'
-CONFIG_FILE = 'config.json'
+CONFIG_FILE = 'test_files/config.json'
 
 #basic reading and writing tests
 class TestCore(unittest.TestCase):
@@ -39,19 +39,24 @@ class TestCore(unittest.TestCase):
   def test_write_srt(self):
     output_subs = ProcessSRT.format_srt(self.srtSubsFormat)
     self.assertEqual(self.srtTestText, output_subs)
-    #write as srt to file
 
   # SSA TESTS
-  # Input: testing parsing, only the events data is relevant here current
+  # Input:
+  #   testing parsing, only the events data is relevant here current
   def test_read_ssa_dialogue(self):
     self.assertEqual(self.ssaSubsFormat[0].dialogue, SSA_VERIFIER[0].dialogue)
   def test_read_ssa_times(self):
     self.assertEqual(self.ssaSubsFormat[0].time, SSA_VERIFIER[0].time)
-  # Output <<TODO>> Handle config file, test various aspects
-  def test_write_ssa(self):
+  # Output
+  #   Config processing is highly related to this section
+  def test_ssa_string(self):
     output_format = ProcessSSA.format_ssa(self.ssaSubsFormat)
+    FileIO.write_file('test_files/outputs/output.ssa', output_format)
     self.assertEqual(self.ssaTestText, output_format)
-    #write as ssa to file, compare
+  def ssa_output(self):
+    #output line by line
+    return 0
+
 
 #config file validation
 class TestProcessConfig(unittest.TestCase):
@@ -69,6 +74,7 @@ class TestProcessConfig(unittest.TestCase):
     return 0
   #test values and keys validation (ensure necessary fields and ordering is included)
   #if
+
 
 #Testing the merge process, syncing files, validation,etc
 #Using SRT for simplicity's sake
@@ -106,14 +112,6 @@ class TestMerges(unittest.TestCase):
     FileIO.write_file('test_files/outputs/time_window_success.srt', output)
     self.assertEqual(output, self.resultMergeMatchTxt)
 
-  def write_file():
-    #ideally unnecessary, use the default SSA writer
-    print 'c'
-
-#class CollapseDialogues
-#class SRT Out Merge
-#class TestConfig
-#class TestSSAMerge
 
 class SSAFormatting(unittest.TestCase):
   def __init__(self, *args, **kwargs):

@@ -1,5 +1,5 @@
 {
-  "<<TODO>>": "move defaults from here to readme, outline options (e.g. fonts)",
+  "NOTE": "DON'T USE THIS FILE ANYMORE",
   "test_data": {
     "srt_testfile": "test_files/SRT_3Lines.srt",
     "ssa_testfile": "test_files/SSA_3Lines.ssa"
@@ -104,7 +104,7 @@
       ]
     }
   },
-  "merger_string_specs": {
+  "merger_specs": {
     "secondary_char_limit": 80,
     "newline": false,
     "splitter": "==-==",
