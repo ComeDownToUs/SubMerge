@@ -1,5 +1,6 @@
 import re
 import Subtitling
+import SSAValidators
 
 ''' Inputs (converts to an array of SubLine class files) '''
 
@@ -55,10 +56,8 @@ def format_ssa(sub_lines, merge=False):
   ssa_output += "[Events]\n"
   ssa_output += (ssa_skeleton["events"]['format'])
   ssa_output += '\n'
-
   if merge:
     return ssa_output + format_merge_ssa(sub_lines, ssa_skeleton['events']['event_shell'])
-
   for entry in sub_lines:
     ssa_output += format_ssa_line(entry, ssa_skeleton['events']['event_shell'][0])
   return ssa_output
@@ -226,7 +225,6 @@ def ssa_format_event(event):
       else:
         event_strings[1] += (event[i] + ",")
   return {"format": format_string[:-2], "event_shell": event_strings}
-
 
 
 
