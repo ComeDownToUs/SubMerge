@@ -52,3 +52,4 @@ TO BE WRITTEN
 - Log decoupling issues (ideally want merge operations split from subtitle conversion as much as possible, and everything split by format too)
 - Config validations
 - Write to file in pieces
+- Switch to python 3.3

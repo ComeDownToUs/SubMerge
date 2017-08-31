@@ -1,10 +1,10 @@
 # This code will only use the style validation and hold the constants for now
 
 DEFAULT_SCRIPT_INFO = {
-  "title": "Built By https://github.com/ComeDownToUs/SubMerge",
+  "Title": "Built By https://github.com/ComeDownToUs/SubMerge",
   "Original Script": "Likely Someone Else"}
 DEFAULT_V4_STYLES = {
-  "title": "Style",
+  "Format": "Style",
   "Name": "HardDefault",
   "Fontname": "Tahoma",
   "Fontsize": "24",
@@ -23,9 +23,9 @@ DEFAULT_V4_STYLES = {
   "MarginV": "10",
   "AlphaLevel": "0",
   "Encoding": "0",
-  "order": ["Name","Fontname","Fontsize","PrimaryColour","SecondaryColour","TertiaryColour","BackColour","Bold","Italic","BorderStyle","Outline","Shadow","Alignment","MarginL","MarginR","MarginV","AlphaLevel","Encoding"]}
+  "order": ["Format","Name","Fontname","Fontsize","PrimaryColour","SecondaryColour","TertiaryColour","BackColour","Bold","Italic","BorderStyle","Outline","Shadow","Alignment","MarginL","MarginR","MarginV","AlphaLevel","Encoding"]}
 DEFAULT_EVENT = {
-  "title": "Dialogue",
+  "Format": "Dialogue",
   "Marked": "Marked=0",
   "Start": "00:00:00.00",
   "End": "00:00:00.00",
@@ -35,14 +35,14 @@ DEFAULT_EVENT = {
   "MarginR": "0000",
   "MarginV": "0000",
   "PrimaryEffect": "!Effect",
-  "order": ["Marked","Start","End","Style","Name","MarginL","MarginR","MarginV","PrimaryEffect","Text"]}
+  "order": ["Format","Marked","Start","End","Style","Name","MarginL","MarginR","MarginV","PrimaryEffect","Text"]}
 
 def validate_info(config_info):
-  return valid_ssa_attributes(config_info, DEFAULT_SCRIPT_INFO)
+  return attribute_cleanup(config_info, DEFAULT_SCRIPT_INFO)
 
 def validate_style(config_style):
-  validated = valid_ssa_attributes(config_style, DEFAULT_V4_STYLES)
-  if validated['Style'] == 'HardDefault':
+  validated = attribute_cleanup(config_style, DEFAULT_V4_STYLES)
+  if validated['Name'] == 'HardDefault':
     validated['log'] = 'Please use a valid name for Style (NOTE: '+\
       DEFAULT_V4_STYLES['Name']+'is reserved) '
     print validated['log']
@@ -50,23 +50,23 @@ def validate_style(config_style):
   return validated
 
 def validate_event(config_event):
-  return valid_ssa_attributes(config_event, DEFAULT_EVENT)
+  return attribute_cleanup(config_event, DEFAULT_EVENT)
 
-def has_attribute(configurated, defaults):
+def attribute_cleanup(configurated, defaults):
   output_config = {
-    'log' = ''
+    'log': ''
   }
-  for entry in order:
+  for entry in defaults['order']:
     try:
-      if len(entry)>0:
+      if len(configurated[entry])>0:
         output_config[entry] = configurated[entry]
       else:
-        dummy = entry[0]
-    except (AttributeError, TypeError) as e:
+        output_config[entry] = defaults[entry]
+        output_config['log'] += ('Blank string at '+entry)
+    except (AttributeError, KeyError, TypeError) as e:
       output_config[entry] = defaults[entry]
-      output_config['log'] += (entry+':'+e+'\n')
+      output_config['log'] += ('Error at key '+str(e)+'\n')
   if output_config['log'] == '':
     output_config['log'] = 'No issues in validation check'
-  print output_config['log']
   return output_config
 
