@@ -100,7 +100,6 @@ class TestProcessConfig(unittest.TestCase):
     del resolved['log']
     self.assertDictEqual(self.result, resolved)
   #test values and keys validation (ensure necessary fields and ordering is included)
-  #if
 
 
 #Testing the merge process, syncing files, validation,etc

@@ -1,3 +1,4 @@
+import re
 # This code will only use the style validation and hold the constants for now
 
 DEFAULT_SCRIPT_INFO = {
@@ -69,4 +70,16 @@ def attribute_cleanup(configurated, defaults):
   if output_config['log'] == '':
     output_config['log'] = 'No issues in validation check'
   return output_config
+
+def numeric_attribute(a, b):
+  valA = re.match(r'\d+', a)
+  valB = re.match(r'\d+', b)
+  if valA == valB:
+    print 'both match'
+    if valA != None
+      return True
+  else:
+    return False
+
+
 
