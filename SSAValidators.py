@@ -1,4 +1,3 @@
-import re
 # This code will only use the style validation and hold the constants for now
 
 DEFAULT_SCRIPT_INFO = {
@@ -71,15 +70,29 @@ def attribute_cleanup(configurated, defaults):
     output_config['log'] = 'No issues in validation check'
   return output_config
 
-def numeric_attribute(a, b):
-  valA = re.match(r'\d+', a)
-  valB = re.match(r'\d+', b)
-  if valA == valB:
-    print 'both match'
-    if valA != None
-      return True
-  else:
-    return False
+''' Type validation '''
 
+''' this is somehow breaking tests at the moment
+    so I'm gonna leave it for the time being
+    and get back to it once everything is running '''
+def is_float(a):
+  try:
+    float(a)
+    return True
+  except ValueError:
+    return False
+def is_int(a):
+  try:
+    int(a)
+    return True
+  except ValueError:
+    return False
+def attr_type(a):
+  if is_float(a):
+    return 'float'
+  elif is_int(a):
+    return 'int'
+def type_match(a,b):
+  return attr_type(a) == attr_type(b)
 
 
