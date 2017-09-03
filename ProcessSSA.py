@@ -52,7 +52,7 @@ def format_ssa(sub_lines, merge=False):
   ssa_skeleton = get_ssa_format()
   ssa_output = ssa_skeleton["info_string"] + "\n\n"
   ssa_output += "[V4 Styles]\n"
-  ssa_output += (ssa_skeleton["style_string"] + "\n")
+  ssa_output += (ssa_skeleton["styles_string"] + "\n")
   ssa_output += "[Events]\n"
   ssa_output += (ssa_skeleton["events"]['format'])
   ssa_output += '\n'
@@ -73,7 +73,7 @@ def format_ssa_line(subtitle, event_shell):
   ssa_event = ssa_event[:-2] + "\n"
   return ssa_event
 
-def format_merge_ssa(sub_lines, event_shells):
+def format_merge_ssa_dialogue(sub_lines, event_shells):
   ssa_merge_output = ''
   for entry in sub_lines:
     ssa_merge_output += format_merge_ssa_line(entry, event_shells)
@@ -94,7 +94,7 @@ def format_merge_ssa_line(subtitle, event_shells):
 
 
 #returns skeletal strings built from config specification to apply time and dialogue to for SSA
-def get_ssa_format():
+def get_ssa_format(style1={}, style2={}):
   #<<TODO>> Read in JSON configs and overwrite where appropriate
   script_info= {
     "title": "Built By https://github.com/ComeDownToUs/SubMerge",
@@ -123,77 +123,23 @@ def get_ssa_format():
       "PrimaryEffect",
       "Text"
     ]}
-  style = {
-    "styles": [
-      {
-        "title": "Style",
-        "Name": "Default",
-        "Fontname": "Tahoma",
-        "Fontsize": "24",
-        "PrimaryColour": "16777215",
-        "SecondaryColour": "00000000",
-        "TertiaryColour": "00000000",
-        "BackColour": "00000000",
-        "Bold": "0",
-        "Italic": "0",
-        "BorderStyle": "1",
-        "Outline": "1",
-        "Shadow": "0",
-        "Alignment": "2",
-        "MarginL": "30",
-        "MarginR": "30",
-        "MarginV": "10",
-        "AlphaLevel": "0",
-        "Encoding": "0"
-      },
-      {
-        "title": "Style",
-        "Name": "Secondary",
-        "Fontname": "Tahoma",
-        "Fontsize": "16",
-        "PrimaryColour": "12632256",
-        "SecondaryColour": "00000000",
-        "TertiaryColour": "00000000",
-        "BackColour": "00000000",
-        "Bold": "0",
-        "Italic": "1",
-        "BorderStyle": "1",
-        "Outline": "1",
-        "Shadow": "0",
-        "Alignment": "2",
-        "MarginL": "30",
-        "MarginR": "30",
-        "MarginV": "10",
-        "AlphaLevel": "0",
-        "Encoding": "0"
-      }
-    ],
-    "order": [
-      "Name",
-      "Fontname",
-      "Fontsize",
-      "PrimaryColour",
-      "SecondaryColour",
-      "TertiaryColour",
-      "BackColour",
-      "Bold",
-      "Italic",
-      "BorderStyle",
-      "Outline",
-      "Shadow",
-      "Alignment",
-      "MarginL",
-      "MarginR",
-      "MarginV",
-      "AlphaLevel",
-      "Encoding"
-    ]
-  }
+  styles = [SSAValidators.validate_style(style1)]
+  if( len(style2.keys()) != 0):
+    styles.append(SSAValidators.validate_style(style2)) #<<TODO>> handle if empty
   return {
     "info_string": ssa_format_title(script_info),
-    "style_string": ssa_format_style(style),
-    "events": ssa_format_event(event)
+    "styles_string": ssa_format_style(styles),
+    "events": ssa_format_event(event,styles)
   }
+
+def ssa_headings_string(ssa_formats):
+  ssa_output = ssa_formats["info_string"] + "\n\n"
+  ssa_output += "[V4 Styles]\n"
+  ssa_output += (ssa_formats["styles_string"] + "\n")
+  ssa_output += "[Events]\n"
+  ssa_output += (ssa_formats["events"]['format'])
+  ssa_output += '\n'
+  return ssa_output
 
 def ssa_format_title(info):
   return "[Script Info]\nTitle: " \
@@ -202,28 +148,32 @@ def ssa_format_title(info):
         + "\nScriptType: v4.00"
 
 def ssa_format_style(styles):
-  format_string = "Format: "
+  format_string = ""
   styles_string = ""
-  for i in styles['order']:
+  for i in styles[0]['order']:
     format_string += (i + ", ")
-  for style in styles['styles']:
-    style_holder = 'Style: '
-    for j in styles['order']:
+  format_string = format_string.replace(',', ':', 1)
+  for style in styles:
+    style_holder = ''
+    for j in style['order']:
       style_holder += (style[j] + ", ")
+    style_holder = style_holder.replace(',', ':', 1)
     styles_string += (style_holder[:-2]+'\n')
   return format_string[:-2] +"\n"+styles_string
 
-def ssa_format_event(event):
+def ssa_format_event(event, styles):
   format_string = "Format: "
-  event_strings = ["Dialogue: ", "Dialogue: "]
+  event_string_template = "Dialogue: "
+  event_strings = []
   for i in event['order']:
     format_string += (i + ", ")
     if i in event.keys():
-      event_strings[0] += (event[i] + ",")
       if i == 'Style':
-        event_strings[1] += "Secondary,"
+        event_string_template += 'PLACEHOLDER,'
       else:
-        event_strings[1] += (event[i] + ",")
+        event_string_template += (event[i] + ",")
+  for style in styles:
+    event_strings.append(event_string_template.replace('PLACEHOLDER', style['Name']))
   return {"format": format_string[:-2], "event_shell": event_strings}
 
 

@@ -57,6 +57,7 @@ def merge_ssa_format(sublist):
 # NOTE: This function is likely not required as SSA allows multiple subtitles at once
 #apply stylings to a string,
 #need to test which ones need closing
+# Also note python3 errors here
 def ssa_apply_styling(sublist, style_change):
   styling = ["", ""]
   if "bold" in style_change:
@@ -69,8 +70,8 @@ def ssa_apply_styling(sublist, style_change):
     styling[0] = "{\i1}"+styling[0]
     styling[1] = styling[0]+"{\i0}"
   if "underline" in style_change:
-    styling[0] = "{\u1}"+styling[0]
-    styling[1] = styling[0]+"{\u0}"
+    styling[0] = r"{\u1}"+styling[0]
+    styling[1] = styling[0]+r"{\u0}"
   if "strike" in style_change:
     styling[0] = "{\s1}"+styling[0]
     styling[1] = styling[0]+"{\s0}"

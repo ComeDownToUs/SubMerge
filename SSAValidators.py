@@ -42,11 +42,12 @@ def validate_info(config_info):
 
 def validate_style(config_style):
   validated = attribute_cleanup(config_style, DEFAULT_V4_STYLES)
-  if validated['Name'] == 'HardDefault':
-    validated['log'] = 'Please use a valid name for Style (NOTE: '+\
-      DEFAULT_V4_STYLES['Name']+'is reserved) '
-    print validated['log']
-    return  validated['log']
+  # if validated['Name'] == 'HardDefault':
+  #   validated['log'] = 'Please use a valid name for Style (NOTE: '+\
+  #     DEFAULT_V4_STYLES['Name']+'is reserved) '
+  #   print validated['log']
+  #   return  validated['log']
+  validated['order'] = DEFAULT_V4_STYLES['order']
   return validated
 
 def validate_event(config_event):

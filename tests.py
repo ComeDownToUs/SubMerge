@@ -14,10 +14,10 @@ TEST_FILES_DIR = 'test_files/'
 SRT_TESTFILE    = TEST_FILES_DIR+'3Lines.srt'
 SSA_TESTFILE    = TEST_FILES_DIR+'3Lines.ssa'
 
-MERGE_MATCH     = TEST_FILES_DIR+'Merge_Match.srt'
-MERGE_1SEC      = TEST_FILES_DIR+'Merge_1sec.srt'
-MERGE_MAXLEN    = TEST_FILES_DIR+'Merge_Longline.srt'
-MERGE_MULTILINE = TEST_FILES_DIR+'Merge_Multiline.srt'
+MERGE_MATCH         = TEST_FILES_DIR+'Merge_Match.srt'
+MERGE_1SEC          = TEST_FILES_DIR+'Merge_1sec.srt'
+MERGE_MAXLEN        = TEST_FILES_DIR+'Merge_Longline.srt'
+MERGE_MULTILINE     = TEST_FILES_DIR+'Merge_Multiline.srt'
 RESULT_MERGE_MATCH  = TEST_FILES_DIR+'Result_Merge_Match.srt'
 RESULT_1SEC_FAIL    = TEST_FILES_DIR+'Result_1Sec_Fail.srt'
 
@@ -39,14 +39,14 @@ class TestCore(unittest.TestCase):
   # SRT TESTS
   # Input interpretation:
   def test_read_srt_dialogue(self):
-    print "Reading SRT dialogue"
+    print("Reading SRT dialogue")
     self.assertEqual(self.srtSubsFormat[0].dialogue, SRT_VERIFIER[0].dialogue)
   def test_read_srt_times(self):
-    print "Reading SRT time"
+    print("Reading SRT time")
     self.assertEqual(self.srtSubsFormat[0].time, SRT_VERIFIER[0].time)
   # Output generation:
   def test_write_srt(self):
-    print "Writing SRT"
+    print("Writing SRT")
     output_subs = ProcessSRT.format_srt(self.srtSubsFormat)
     self.assertEqual(self.srtTestText, output_subs)
 
@@ -54,15 +54,15 @@ class TestCore(unittest.TestCase):
   # Input:
   #   testing parsing, only the events data is relevant here current
   def test_read_ssa_dialogue(self):
-    print "Reading SSA dialogue"
+    print("Reading SSA dialogue")
     self.assertEqual(self.ssaSubsFormat[0].dialogue, SSA_VERIFIER[0].dialogue)
   def test_read_ssa_times(self):
-    print "Reading SSA time"
+    print("Reading SSA time")
     self.assertEqual(self.ssaSubsFormat[0].time, SSA_VERIFIER[0].time)
   # Output
   #   Config processing is highly related to this section
   def test_ssa_string(self):
-    print "Writing SSA"
+    print("Writing SSA")
     output_format = ProcessSSA.format_ssa(self.ssaSubsFormat)
     FileIO.write_file(TEST_FILES_DIR+'outputs/output.ssa', output_format)
     self.assertEqual(self.ssaTestText, output_format)
@@ -79,25 +79,28 @@ class TestProcessConfig(unittest.TestCase):
     self.maxDiff=None
 
   def test_read_config_json(self):
-    print "Config Basic Reading"
+    print("Config Basic Reading")
     self.assertEqual(self.result['Format'], 'Style')
   def test_config_attr_error(self):
-    print "Config handling missing attribute"
+    print("Config handling missing attribute")
     attr_error = FileIO.read_json(CONFIG_ATTR_ERROR)
     resolved = SSAValidators.validate_style(attr_error)
     del resolved['log']
+    del resolved['order']
     self.assertDictEqual(self.result, resolved)
   def test_config_blank_string(self):
-    print "Config handling blank entry"
+    print("Config handling blank entry")
     blank_str = FileIO.read_json(CONFIG_BLANK_STR)
     resolved = SSAValidators.validate_style(blank_str)
     del resolved['log']
+    del resolved['order']
     self.assertDictEqual(self.result, resolved)
   def test_config_type_error(self):
-    print "Config handling type error"
+    print("Config handling type error")
     blank_str = FileIO.read_json(CONFIG_BLANK_STR)
     resolved = SSAValidators.validate_style(blank_str)
     del resolved['log']
+    del resolved['order']
     self.assertDictEqual(self.result, resolved)
   #test values and keys validation (ensure necessary fields and ordering is included)
 
@@ -115,7 +118,7 @@ class TestMerges(unittest.TestCase):
     FileIO.write_file(TEST_FILES_DIR+'outputs/resultMergeMatch.srt', self.resultMergeMatchTxt)
 
   def test_basic_pair(self):
-    print "Merge time match"
+    print("Merge time match")
     subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
     subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
     SubMatch.match_process(subs1, subs2)
@@ -124,7 +127,7 @@ class TestMerges(unittest.TestCase):
     self.assertEqual(output, self.resultMergeMatchTxt)
 
   def test_time_window_success(self):
-    print "Merge time-variance match"
+    print("Merge time-variance match")
     subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
     subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_1SEC))
     SubMatch.match_process(subs1, subs2, 1000)
@@ -133,13 +136,27 @@ class TestMerges(unittest.TestCase):
     self.assertEqual(output, self.resultMergeMatchTxt)
 
   def test_time_window_fail(self):
-    print "Merge time-variance non-match"
+    print("Merge time-variance non-match")
     subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
     subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_1SEC))
     SubMatch.match_process(subs1, subs2)
     output = ProcessSRT.format_srt(subs1)
     FileIO.write_file(TEST_FILES_DIR+'outputs/time_window_fail.srt', output)
     self.assertEqual(output, self.result1SecFailTxt)
+
+  def test_ssa_write(self):
+    print("Trial SSA Merge output")
+    subs1 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_MATCH))
+    subs2 = ProcessSRT.process_srt(FileIO.read_full_file(MERGE_1SEC))
+    SubMatch.match_process(subs1, subs2, 1000)
+    condir = 'configs/ssa/'
+    second = condir+'secondary.config.json'
+    white = condir+'whiteBlackOutline.config.json'
+    format_data = ProcessSSA.get_ssa_format(FileIO.read_json(second), FileIO.read_json(white))
+    headings_string = ProcessSSA.ssa_headings_string(format_data)
+    FileIO.write_file('hmm.ssa', headings_string)
+    for i in subs1:
+      FileIO.append_file('hmm.ssa', ProcessSSA.format_merge_ssa_line(i, format_data['events']['event_shell']))
 
 
 class SSAFormatting(unittest.TestCase):
