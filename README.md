@@ -41,14 +41,25 @@ The code is pretty convoluted but the reading of SSA files focuses exclusively o
 SSA, being significantly more modifiable will ideally use a config file with a default style option and another style for the secondary subtitles. As more than one subtitle can be displayed on screen at the same time, I'm aiming to keep each entry separate.
 
 ## Merge Process choices
-
-TO BE WRITTEN
+There are two sets of subtitles, the code is large constructed to potentially handle more but I wasn't keeping track of this too much. The first set passed in are the primary set, this means they will be included in their entirety, only subtitles from the second set which match their time breakages will be included.
+Several arguments will exist for the purposes of prioritisation and screen space maximising:
+- a character limit on the second set of subtitles
+- the level of variance in time for the second set of subtitles
+- if newlines are included
+- if not, what represents where a line break would have been
 
 #To-dos
-- Read in formatting options from json file
-- Create functions to display defaults
-- Tweak to work as a basic subtitle conversion library
+- Read in formatting options from json file (merge config processing req'd)
 - Reduce SSA hardcoding, seems like it's ripe for failure right now
 - Log decoupling issues (ideally want merge operations split from subtitle conversion as much as possible, and everything split by format too)
-- Config validations
-- Write to file in pieces
+- Config type validations
+- Switch to python 3.3
+- Flag coupling issues (specifically hardcoded values)
+- Refactor again once running basic operations
+
+
+### Future features
+- Build a docopt interface
+- Build a CLI
+- Tweak to work as a basic subtitle conversion library
+- SUB format support

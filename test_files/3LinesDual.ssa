@@ -1,0 +1,15 @@
+[Script Info]
+Title: Built By https://github.com/ComeDownToUs/SubMerge
+Original Script: Likely Someone Else
+ScriptType: v4.00
+
+[V4 Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
+Style: Default, Tahoma, 24, 16777215, 00000000, 00000000, 00000000, 0, 0, 1, 1, 0, 2, 30, 30, 10, 0, 0
+Style: Secondary, Tahoma, 16, 12632256, 00000000, 00000000, 00000000, 0, 1, 1, 1, 0, 2, 30, 30, 10, 0, 0
+
+[Events]
+Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, PrimaryEffect, Text
+Dialogue: Marked=0,00:01:12.83,00:01:19.00,Default,NTP,0000,0000,0000,!Effect,BROKEN EMBRACES
+Dialogue: Marked=0,00:01:42.46,00:01:49.42,Default,NTP,0000,0000,0000,!Effect,(Newspaper sheets)
+Dialogue: Marked=0,00:01:55.71,00:01:57.75,Default,NTP,0000,0000,0000,!Effect,What's your name?

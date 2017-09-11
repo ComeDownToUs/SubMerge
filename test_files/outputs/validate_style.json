@@ -1,0 +1,21 @@
+{
+  "Format": "Style",
+  "Name": "Secondary",
+  "Fontname": "Tahoma",
+  "Fontsize": "16",
+  "PrimaryColour": "12632256",
+  "SecondaryColour": "16777215",
+  "TertiaryColour": "16777215",
+  "BackColour": "12632256",
+  "Bold": "-1",
+  "Italic": "1",
+  "BorderStyle": "1",
+  "Outline": "1",
+  "Shadow": "0",
+  "Alignment": "2",
+  "MarginL": "30",
+  "MarginR": "30",
+  "MarginV": "10",
+  "AlphaLevel": "0",
+  "Encoding": "0"
+}
