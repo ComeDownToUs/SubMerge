@@ -4,8 +4,13 @@ Currently this system is only in a testing stage focusing exclusively on the cor
 
 These operations are to function as a subtitle converter for initially SRT and SSA subtitle formats, I'll probably include SUB too purely because they're so easy to do.
 
+
+The next steps are to include a docopt interface in the root director for a fully operating package. As it stands, please use the following commands to test functionality. Currently this has to be ran from outside the directory; I'm going to build a DocOpt CLI in the root so the code actually does someting next
+
 ```
-  python test.py
+  python -m SubMerge.tests.tests_core
+  python -m SubMerge.tests.tests_config
+  python -m SubMerge.tests.tests_merging
 ```
 
 # Why...
@@ -48,11 +53,11 @@ Several arguments will exist for the purposes of prioritisation and screen space
 - if newlines are included
 - if not, what represents where a line break would have been
 
-#To-dos
-- Read in formatting options from json file (merge config processing req'd)
+# To-dos
+- Read in formatting options from json file (partially complete)
+- Config type validations
 - Reduce SSA hardcoding, seems like it's ripe for failure right now
 - Log decoupling issues (ideally want merge operations split from subtitle conversion as much as possible, and everything split by format too)
-- Config type validations
 - Switch to python 3.3
 - Flag coupling issues (specifically hardcoded values)
 - Refactor again once running basic operations

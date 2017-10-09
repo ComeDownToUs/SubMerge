@@ -40,15 +40,18 @@ DEFAULT_EVENT = {
 def validate_info(config_info):
   return attribute_cleanup(config_info, DEFAULT_SCRIPT_INFO)
 
-def validate_style(config_style):
-  validated = attribute_cleanup(config_style, DEFAULT_V4_STYLES)
-  # if validated['Name'] == 'HardDefault':
-  #   validated['log'] = 'Please use a valid name for Style (NOTE: '+\
-  #     DEFAULT_V4_STYLES['Name']+'is reserved) '
-  #   print validated['log']
-  #   return  validated['log']
-  validated['order'] = DEFAULT_V4_STYLES['order']
-  return validated
+#needs to avoid reserved keywords
+def validate_style(config_style={}):
+  try:
+    if(config_style == {}):
+      print("SSA Validator -- validate_style: No styles passed in, using defaults")
+      return DEFAULT_V4_STYLES
+    validated = attribute_cleanup(config_style, DEFAULT_V4_STYLES)
+    validated['order'] = DEFAULT_V4_STYLES['order']
+    return validated
+  except TypeError:
+    print "Invalid type passed as style, using defaults"
+    return DEFAULT_V4_STYLES
 
 def validate_event(config_event):
   return attribute_cleanup(config_event, DEFAULT_EVENT)
@@ -69,6 +72,9 @@ def attribute_cleanup(configurated, defaults):
       output_config['log'] += ('Error at key '+str(e)+'\n')
   if output_config['log'] == '':
     output_config['log'] = 'No issues in validation check'
+  else:
+    print "OUTPUT CONFIG ISSUES\n=============="
+    print output_config['log']
   return output_config
 
 ''' Type validation '''
